@@ -2,31 +2,30 @@ name: Packager
 
 on:
   push:
-     branches: [ dev1 ]
+    branches: [ dev1 ]
   pull_request:
-     branches: [ dev1 ]
+    branches: [ dev1 ]
   workflow_dispatch:
-   
-# Allows you to run this workflow manually from the Actions tab
-  
 
-runs-on: veracode/scm-packaging:3.0.0
+jobs:
+  packager:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-steps:
+      - name: Install Veracode CLI
+        run: curl -fsS https://tools.veracode.com/veracode-cli/install | sh
 
-# This step will install and run the packager and save the artifacts to a folder called 'verascan'
-- task: CmdLine@2
-  name: "VeracodePackage"
-  env:
-    VERACODE_API_KEY_ID: $(VERACODE_ID)
-    VERACODE_API_KEY_SECRET: $(VERACODE_SECRET)
-  inputs:
-    script: |
-      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-      ./veracode package -das <folder to package> --output ./verascan
+      - name: Run Veracode Packager
+        env:
+          VERACODE_API_KEY_ID: ${{ secrets.VERACODE_ID }}
+          VERACODE_API_KEY_SECRET: ${{ secrets.VERACODE_SECRET }}
+        run: |
+          ./veracode package -das <folder to package> --output ./verascan
 
-      # Check if the verascan directory exists
-      if [ ! -d "verascan" ]; then
-        echo "Error: verascan directory not found."
-        exit 1
-      fi
+          # Check if the verascan directory exists
+          if [ ! -d "verascan" ]; then
+            echo "Error: verascan directory not found."
+            exit 1
+          fi
