@@ -1,10 +1,10 @@
-# This is an example YAML for implementing Veracode packager image and packager CLI, Agent-Based SCA, Static Policy, and Static cli pipeline Scans
+name: Packager
 
 on:
   push:
-    branches: [ development ]
-  pull_request:
-    branches: [ development ]
+     branches: [ dev1 ]
+    pull_request:
+     branches: [ dev1 ]
     
 # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -12,6 +12,8 @@ on:
 pool:
   # Below, the package and SCA steps will have 2 versions, one for LINUX/MAC and one for Windows. If using Windows, switch to a Windows image
   vmImage: veracode/scm-packaging:3.0.0
+
+steps:
 
 # This step will install and run the packager and save the artifacts to a folder called 'verascan'
 - task: CmdLine@2
