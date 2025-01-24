@@ -3,15 +3,14 @@ name: Packager
 on:
   push:
      branches: [ dev1 ]
-    pull_request:
+  pull_request:
      branches: [ dev1 ]
-    
-# Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+   
+# Allows you to run this workflow manually from the Actions tab
+  
 
-pool:
-  # Below, the package and SCA steps will have 2 versions, one for LINUX/MAC and one for Windows. If using Windows, switch to a Windows image
-  vmImage: veracode/scm-packaging:3.0.0
+runs-on: veracode/scm-packaging:3.0.0
 
 steps:
 
