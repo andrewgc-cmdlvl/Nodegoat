@@ -1,5 +1,5 @@
 # This is an example YAML for implementing Veracode packager image and packager CLI, Agent-Based SCA, Static Policy, and Static cli pipeline Scans
-
+name: Packager
 on:
   push:
     branches: [ dev1 ]
